@@ -73,6 +73,7 @@ app.post('/api/duel', (req, res) => {
         //comparing the total health to determine a winner
         if (compHealthAfterAttack > playerHealthAfterAttack) {
             playerRecord.losses++
+            rollbar.log('ya lost, homie.')
             res.status(200).send('You lost!')
         } else {
             playerRecord.wins++
@@ -81,7 +82,7 @@ app.post('/api/duel', (req, res) => {
         }
     } catch (error) {
         console.log('ERROR DUELING', error)
-        rollbar.critical('duel error')
+        rollbar.critical('the show must go on')
         res.sendStatus(400)
     }
 })
@@ -92,7 +93,7 @@ app.get('/api/player', (req, res) => {
         rollbar.info('the player stats have been displayed!')
     } catch (error) {
         console.log('ERROR GETTING PLAYER STATS', error)
-        rollbar.log('erroneous player recording here...')
+        rollbar.log('suspecting foul play here...')
         res.sendStatus(400)
     }
 })
